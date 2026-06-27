@@ -1,0 +1,24 @@
+# Anomaly Detection Configuration
+# ===================================
+# Downstream anomaly detection using pretrained I-JEPA features.
+
+data:
+  root: ~/UCAD/mvtec2d              # Same dataset root as pretraining
+  image_size: 224
+  batch_size: 16
+  num_workers: 4
+
+features:
+  checkpoint: checkpoints/ijepa_best.pth  # Path to pretrained checkpoint
+  layers: [4, 6, 8, 10, 12]        # Which encoder layers to extract features from
+  reduce_dim: 100                   # PCA reduction dimension (PaDiM-style)
+  pool: avg                         # Pooling method: "avg", "max", or "none"
+
+anomaly:
+  method: padim                     # Detection method: "padim"
+  top_k: 0.01                       # Top-K anomaly scores for image-level score
+
+evaluation:
+  output_dir: results/              # Where to save per-category results
+  visualize: true                   # Save anomaly heatmap visualizations
+  categories: []                    # Empty = all categories; list to filter

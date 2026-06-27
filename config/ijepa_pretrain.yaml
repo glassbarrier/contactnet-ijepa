@@ -1,0 +1,50 @@
+# I-JEPA Pretraining Configuration
+# ====================================
+# All paths are relative to the server environment.
+# Modify `data.root` to point to your dataset location.
+
+data:
+  root: ~/UCAD/mvtec2d              # MVTec-AD style dataset root
+  categories: []                     # Empty = auto-discover all 12 categories
+  image_size: 224                    # Input image size (square)
+  batch_size: 32                     # Batch size per GPU
+  num_workers: 8                     # DataLoader workers
+
+model:
+  vit_size: small                    # "small" or "base"
+  patch_size: 16                     # ViT patch size
+  embed_dim: 384                     # Embedding dimension (small=384, base=768)
+  depth: 12                          # Encoder depth
+  heads: 6                           # Attention heads
+  mlp_ratio: 4.0                     # MLP hidden ratio
+  predictor:
+    depth: 6                         # Predictor transformer depth
+    embed_dim: 192                   # Predictor embedding dimension
+    heads: 3                         # Predictor attention heads
+
+mask:
+  num_context_blocks: 4              # Number of context (visible) blocks
+  num_target_blocks: 4               # Number of target (predicted) blocks
+  block_scale: [0.15, 0.2]           # Block side ratio range [min, max]
+  aspect_ratio: [0.75, 1.5]          # Block aspect ratio range [min, max]
+  overlap_allowed: false             # Whether blocks can overlap
+
+training:
+  epochs: 300                        # Total pretraining epochs
+  lr: 0.001                          # Base learning rate
+  warmup_epochs: 10                  # Linear warmup epochs
+  min_lr: 1.0e-6                     # Minimum LR after cosine decay
+  weight_decay: 0.04                 # AdamW weight decay
+  beta1: 0.9                         # AdamW beta1
+  beta2: 0.95                        # AdamW beta2
+  ema_start: 0.996                   # Target encoder EMA start value
+  ema_end: 1.0                       # Target encoder EMA end value
+  gradient_clip: 3.0                 # Gradient clipping
+  save_every: 20                     # Save checkpoint every N epochs
+  log_every: 50                      # Log every N iterations
+  use_amp: true                      # Automatic mixed precision
+
+paths:
+  checkpoint_dir: checkpoints/       # Checkpoint save directory
+  log_dir: logs/                     # TensorBoard log directory
+  resume_from: null                  # Resume checkpoint path (null = fresh start)

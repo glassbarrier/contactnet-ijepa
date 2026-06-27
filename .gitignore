@@ -1,0 +1,50 @@
+# Data
+data/
+datasets/
+
+# Checkpoints & logs
+checkpoints/
+logs/
+*.pth
+*.pt
+*.ckpt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual env
+venv/
+.venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Wandb
+wandb/
+
+# Results & feature banks
+results/
+feature_banks/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Temporary/planning files
+dataset_structure.txt
+IMPLEMENTATION_PLAN.md
+AGENTS.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+CLAUDE.md
