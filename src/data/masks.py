@@ -207,7 +207,8 @@ def generate_mask_batch(
 
     context_masks = torch.stack(batch_context_masks, dim=0)  # (B, N_patches)
 
-    # target_masks: (num_target_blocks, B, N_patches)
+    # target_masks: (B, num_target_blocks, N_patches) → permute to (num_target_blocks, B, N_patches)
     target_masks = torch.stack(batch_target_masks, dim=0)
+    target_masks = target_masks.permute(1, 0, 2)  # (num_target_blocks, B, N_patches)
 
     return context_masks, target_masks
