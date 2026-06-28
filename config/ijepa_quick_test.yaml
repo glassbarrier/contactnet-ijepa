@@ -1,0 +1,62 @@
+# I-JEPA Quick Test Configuration
+# ================================
+# 用于快速跑通流程的轻量配置。
+# 相比完整训练 (300 epochs, 3h/epoch)，本配置约 15-20min/epoch。
+#
+# 关键改动：
+#   - epochs: 300 → 5（跑通即可）
+#   - num_target_blocks: 4 → 1（速度 4×）
+#   - image_size: 224 → 128（grid 14×14 → 8×8）
+#   - batch_size: 32 → 64（更大 batch 提高 GPU 利用率）
+#   - depth: 12 → 6（encoder 减半）
+#   - predictor depth: 6 → 3（predictor 减半）
+#   - save_every: 20 → 2（频繁保存以便检查）
+#
+# 用法:
+#   python scripts/pretrain.py --config config/ijepa_quick_test.yaml
+
+data:
+  root: ~/UCAD/mvtec2d
+  categories: []
+  image_size: 128                    # 224 → 128
+  batch_size: 64                      # 32 → 64
+  num_workers: 8
+
+model:
+  vit_size: small
+  patch_size: 16
+  embed_dim: 384
+  depth: 6                            # 12 → 6 (encoder 减半)
+  heads: 6
+  mlp_ratio: 4.0
+  predictor:
+    depth: 3                          # 6 → 3 (predictor 减半)
+    embed_dim: 192
+    heads: 3
+
+mask:
+  num_context_blocks: 4
+  num_target_blocks: 2               # 4 → 2 (每个 batch 只预测 1 个 target block)
+  block_scale: [0.15, 0.2]
+  aspect_ratio: [0.75, 1.5]
+  overlap_allowed: false
+
+training:
+  epochs: 100                           # 300 → 5 (跑通流程即可)
+  lr: 0.001
+  warmup_epochs: 5                    # 10 → 2 (配合 5 epochs 按比例缩减)
+  min_lr: 1.0e-6
+  weight_decay: 0.04
+  beta1: 0.9
+  beta2: 0.95
+  ema_start: 0.996
+  ema_end: 1.0
+  gradient_clip: 3.0
+  save_every: 10                       # 20 → 2 (频繁保存)
+  log_every: 10                       # 50 → 10 (频繁日志)
+  use_amp: true
+
+paths:
+  checkpoint_dir: checkpoints/
+  log_dir: logs/
+  resume_from: null
