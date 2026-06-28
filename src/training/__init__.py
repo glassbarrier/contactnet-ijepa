@@ -1,2 +1,2 @@
 from .trainer import IJEPATrainer
-from .utils import EMAScheduler, LRScheduler
+from .utils import EMAScheduler, CosineLRScheduler
