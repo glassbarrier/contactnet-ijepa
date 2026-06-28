@@ -31,20 +31,9 @@ env/
 # Wandb
 wandb/
 
-# Results & feature banks
-results/
-feature_banks/
-
 # Jupyter
 .ipynb_checkpoints/
-
-# Temporary/planning files
-dataset_structure.txt
-IMPLEMENTATION_PLAN.md
-AGENTS.md
 
 # OS
 .DS_Store
 Thumbs.db
-
-CLAUDE.md

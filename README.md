@@ -52,7 +52,7 @@ ijepa/
 ### 1. 安装依赖
 
 ```bash
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 ### 2. 修改配置
