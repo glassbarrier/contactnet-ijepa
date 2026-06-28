@@ -37,3 +37,7 @@ wandb/
 # OS
 .DS_Store
 Thumbs.db
+
+dataset_structure.txt
+CLAUDE.md
+AGENTS.md
