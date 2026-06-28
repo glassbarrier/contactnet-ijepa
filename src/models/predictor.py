@@ -56,7 +56,7 @@ class IJEPAPredictor(nn.Module):
         self.predictor_embed_dim = predictor_embed_dim
 
         # Learnable mask token — shared across all target positions
-        self.mask_token = nn.Parameter(torch.zeros(1, 1, predictor_embed_dim))
+        self.mask_token = nn.Parameter(torch.zeros(1, predictor_embed_dim))
 
         # Learnable positional embeddings for target positions
         self.pos_embed = nn.Parameter(
