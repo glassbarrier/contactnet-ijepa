@@ -96,6 +96,37 @@ python scripts/extract_features.py --config config/anomaly_detection.yaml \
 
 特征库保存在 `feature_banks/` 目录，供后续检测复用。
 
+### 6. 生成可视化图表
+
+在完成预训练和异常检测后，用于生成报告/论文所需的各种图表：
+
+```bash
+# 训练曲线（loss、学习率、EMA 动量）
+python scripts/visualize.py --mode training --log_dir logs/ --checkpoint_dir checkpoints/
+
+# I-JEPA mask 可视化（context/target block 划分示意）
+python scripts/visualize.py --mode masks --config config/ijepa_pretrain.yaml
+
+# 异常检测 AUROC 柱状图
+python scripts/visualize.py --mode anomaly --results results/anomaly_results.json
+
+# 异常热力图（anomaly score map 叠加在测试图像上）
+python scripts/visualize.py --mode heatmaps --config config/anomaly_detection.yaml \
+    -o features.checkpoint=checkpoints/ijepa_best.pth
+
+# 一键生成全部图表
+python scripts/visualize.py --mode all \
+    --config config/anomaly_detection.yaml \
+    --log_dir logs/ --results results/anomaly_results.json \
+    -o features.checkpoint=checkpoints/ijepa_best.pth
+```
+
+图表输出到 `figures/` 目录：
+- `training_curves.png` — loss、LR schedule、EMA momentum
+- `ijepa_masks.png` — 训练时 context/target block 划分可视化
+- `anomaly_auroc.png` — 各类别异常检测 AUROC 柱状图
+- `heatmaps_<category>.png` — 每个类别的异常热力图
+
 ## 关键参考
 
 - **I-JEPA**: Assran et al., "Self-Supervised Learning from Images with a Joint-Embedding Predictive Architecture", arXiv:2301.08243

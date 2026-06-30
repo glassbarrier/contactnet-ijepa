@@ -36,15 +36,15 @@ model:
 
 mask:
   num_context_blocks: 4
-  num_target_blocks: 2               # 4 → 2 (每个 batch 只预测 1 个 target block)
+  num_target_blocks: 1               # 4 → 1 (每个 batch 只预测 1 个 target block)
   block_scale: [0.15, 0.2]
   aspect_ratio: [0.75, 1.5]
   overlap_allowed: false
 
 training:
-  epochs: 100                           # 300 → 5 (跑通流程即可)
+  epochs: 5                           # 300 → 5 (跑通流程即可)
   lr: 0.001
-  warmup_epochs: 5                    # 10 → 2 (配合 5 epochs 按比例缩减)
+  warmup_epochs: 2                    # 10 → 2 (配合 5 epochs 按比例缩减)
   min_lr: 1.0e-6
   weight_decay: 0.04
   beta1: 0.9
@@ -52,7 +52,7 @@ training:
   ema_start: 0.996
   ema_end: 1.0
   gradient_clip: 3.0
-  save_every: 10                       # 20 → 2 (频繁保存)
+  save_every: 2                       # 20 → 2 (频繁保存)
   log_every: 10                       # 50 → 10 (频繁日志)
   use_amp: true
 
